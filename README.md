@@ -1,5 +1,5 @@
 # RHC
-Code relaese for [A Generalized Decision Boundary Theory Based On Non-Euclidean Space For CNN]()
+Code relaese for [A Generalized CNN Decision Boundary Theory Based On Non-Euclidean Space]()
 
 ## Dataset
 Our method can be verified directly on the CUB_200_2011 dataset, and other scenarios can be verified by modifying the parameters in main.py.
