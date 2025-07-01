@@ -12,10 +12,8 @@ import torch.nn.functional as F
 import random
 from TransFG import VisionTransformer as vit
 
-#model_path = "/home/zaowuyu/project/testnet/premodel/best/"
 class FC_(nn.Module):
-    def __init__(self,rate,inp,outp):
-    
+    def __init__(self,rate,inp,outp):    
         super(FC_,self).__init__()
         self.mask_block = random.sample(range(inp),int(inp*(1-rate)))
         self.mask_block = torch.tensor(self.mask_block)
@@ -26,23 +24,6 @@ class FC_(nn.Module):
         x = x[:,self.mask_block]
         x = self.layer(x)
         return x
-    
-class FC_1(nn.Module):
-    def __init__(self,rate,inp,outp,already):
-    
-        super(FC_1,self).__init__()
-        self.mask_block = random.sample(range(inp),int(inp*(rate)))
-        self.mask_block = torch.tensor(self.mask_block)
-        self.layer = already.layer
-        self.layer.weight.data = self.layer.weight.data[:,self.mask_block]
-
-    def forward(self,x): 
-        x = x.reshape([x.shape[0],x.shape[1]])
-        x = x[:,self.mask_block]
-        x = self.layer(x)
-        return x
-
-
         
 class Resnet18(nn.Module):
     def __init__(self, n_class,rate,New,model_path):
@@ -104,18 +85,6 @@ def get_model(model_name, rate, dataset_name):
     print(model_path)
     if dataset_name == "CUB":
       n_class = 200
-    elif dataset_name == "cifar100":
-      n_class = 100
-    elif dataset_name == "VOCdevkit":
-      n_class = 20
-    elif dataset_name == "mini":
-      n_class = 100
-    elif dataset_name == "PDI-C":
-      n_class = 120
-    elif dataset_name == "tiny":
-      n_class = 200
-    elif dataset_name == "aircraft":
-      n_class = 100
     else:
       print("没有这个数据集:",dataset_name)
       print(1/0)
