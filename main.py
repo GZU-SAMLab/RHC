@@ -62,11 +62,11 @@ def Ban_if(ban_, ban_list):
     return False
 
 
-model_list = ["Resnet34"]  # ,"Resnet34","Resnet50","Resnet101","Resnet152","EfficientNet","MobileNet","ResNeXt50","ShuffleNet","SwinTransformer","WideResnet50"
-dataset_list = ["CUB"]  # ，"CUB","cifar100","VOCdevkit","aircraft"
+model_list = ["Resnet34"]  # "Resnet34","EfficientNet","MobileNet","ResNeXt50","ShuffleNet","SwinTransformer","WideResnet50"
+dataset_list = ["CUB"]  # "CUB"
 mask_list = [0,0.35,0.45,0.9]  # 0,0.05,0.15,0.25,0.45,0.90
 
-ban_list = []  # "01*"，*表示通配符，坐标按0开始，必须是三位
+ban_list = []  # "01*"
 number_test = 1
 epochs = 120
 
@@ -79,7 +79,7 @@ img_size = 224
 step_size = 30
 gamma = 0.1
 
-path = 'dataset/'  #数据集所在路径
+path = 'dataset/'  
 save_path = "save/" 
 
 for model_name in model_list:
@@ -101,16 +101,16 @@ for model_name in model_list:
                 model = get_model(model_name=model_name, rate=mask_rate, dataset_name=dataset_name)
                 model = nn.DataParallel(model).cuda()
                 print('-' * 25)
-                print("所用模型    :   ", model_name)
-                print("所用数据集  :   ", dataset_name)
-                print("重复实验编号:   ", number + 1, "号")
-                print("遮盖率      :   ", mask_rate * 100, "%")
-                print("学习率      :   ", base_lr)
+                print("model    :   ", model_name)
+                print("dataset  :   ", dataset_name)
+                print("Repeat number:   ", number + 1, "号")
+                print("mask_rate      :   ", mask_rate * 100, "%")
+                print("learning rate      :   ", base_lr)
                 print("batch_size  :   ", batch_sizes[model_list.index(model_name)])
-                print("迭代极限    :   ", step_size)
+                print("iterated limit    :   ", step_size)
                 print("gamma       :   ", gamma)
                 print("epochs      :   ", epochs)
-                print("GPU使用     :   ", GPUS)
+                print("GPU     :   ", GPUS)
                 print('-' * 25)
                 print('Training process starts:...')
                 if GPUS > 1:
