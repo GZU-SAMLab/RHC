@@ -74,89 +74,7 @@ class ViT(nn.Module):
     def forward(self, X):
         X = self.base_model(X)
         return X    
-    
-    
-def get_model(model_name, rate, dataset_name):
-    n_class = None
-    #dataset_list = ["cifar100","VOCdevkit","CUB"]
-    #model_list = ["DenseNet169","ViT","Resnet18"]
-    model_path = "premodel/test/"
-    model_path = model_path + model_name+'_'+dataset_name+"_0.pth"
-    print(model_path)
-    if dataset_name == "CUB":
-      n_class = 200
-    else:
-      print("没有这个数据集:",dataset_name)
-      print(1/0)
-    
-    if rate == 0:
-        New = True 
-    else:
-        New = False
-    
-    if model_name == "DenseNet169":
-      return Densenet169(n_class,rate,New,model_path)
-    elif model_name == "Resnet18":
-      return Resnet18(n_class,rate,New,model_path)
-    elif model_name == "ViT":
-      return ViT(n_class,rate,New,model_path)
-    elif model_name == "Resnet34":
-      return Resnet34(n_class,rate,New,model_path)
-    elif model_name == "Resnet50":
-      return Resnet50(n_class,rate,New,model_path)
-    elif model_name == "Resnet101":
-      return Resnet101(n_class,rate,New,model_path)
-    elif model_name == "Resnet152":
-      return Resnet152(n_class,rate,New,model_path)
-    elif model_name == "EfficientNet":
-      return EfficientNet(n_class,rate,New,model_path)
-    elif model_name == "MobileNet":
-      return MobileNet(n_class,rate,New,model_path)
-    elif model_name == "ResNeXt50":
-      return ResNeXt50(n_class,rate,New,model_path)
-    elif model_name == "ShuffleNet":
-      return ShuffleNet(n_class,rate,New,model_path)
-    elif model_name == "SqueezeNet":
-      return SqueezeNet(n_class,rate,New,model_path)
-    elif model_name == "SwinTransformer":
-      return SwinTransformer(n_class,rate,New,model_path)
-    elif model_name == "WideResnet50":
-      return SwinTransformer(n_class,rate,New,model_path)
-    if model_name == "DenseNet121":
-      return Densenet121(n_class,rate,New,model_path)
-    if model_name == "DenseNet161":
-      return Densenet161(n_class,rate,New,model_path)
-    if model_name == "DenseNet201":
-      return Densenet201(n_class,rate,New,model_path)
-    else:
-      print("没有这个模型：",model_name)
-      print(1/0)
-      
-
-class VGG16(nn.Module):
-    def __init__(self,n_class,rate):
-        super(VGG16, self).__init__()
-        self.n_class = n_class
-        self.base_model = models.vgg16(pretrained=True)
-        self.base_model.classifier[6] = FC_(rate,4096,self.n_class)#nn.Linear(4096,self.n_class)
-        self.base_model.classifier[6].apply(weight_init_kaiming)
-        
-    def forward(self, X):
-        X = self.base_model(X)
-        return X
-
-class Alexnet(nn.Module):
-    def __init__(self,n_class,rate):
-        super(Alexnet, self).__init__()
-        self.n_class = n_class
-        self.base_model = models.alexnet(pretrained=True)
-        self.base_model.classifier[6] = FC_(rate,4096,self.n_class)#nn.Linear(4096,self.n_class)
-        self.base_model.classifier[6].apply(weight_init_kaiming)
-        
-    def forward(self, X):
-        X = self.base_model(X)
-        return X  
-        
+            
         
 class Resnet34(nn.Module):
     def __init__(self, n_class,rate,New,model_path):
@@ -397,3 +315,59 @@ class Densenet201(nn.Module):
     def forward(self, X):
         X = self.base_model(X)
         return X
+
+def get_model(model_name, rate, dataset_name):
+    n_class = None
+    # dataset_list = ["cifar100","VOCdevkit","CUB"]
+    # model_list = ["DenseNet169","ViT","Resnet18"]
+    model_path = "premodel/test/"
+    model_path = model_path + model_name+'_'+dataset_name+"_0.pth"
+    print(model_path)
+    if dataset_name == "CUB":
+      n_class = 200
+    else:
+      print("没有这个数据集:",dataset_name)
+      print(1/0)
+    
+    if rate == 0:
+        New = True 
+    else:
+        New = False
+    
+    if model_name == "DenseNet169":
+      return Densenet169(n_class,rate,New,model_path)
+    elif model_name == "Resnet18":
+      return Resnet18(n_class,rate,New,model_path)
+    elif model_name == "ViT":
+      return ViT(n_class,rate,New,model_path)
+    elif model_name == "Resnet34":
+      return Resnet34(n_class,rate,New,model_path)
+    elif model_name == "Resnet50":
+      return Resnet50(n_class,rate,New,model_path)
+    elif model_name == "Resnet101":
+      return Resnet101(n_class,rate,New,model_path)
+    elif model_name == "Resnet152":
+      return Resnet152(n_class,rate,New,model_path)
+    elif model_name == "EfficientNet":
+      return EfficientNet(n_class,rate,New,model_path)
+    elif model_name == "MobileNet":
+      return MobileNet(n_class,rate,New,model_path)
+    elif model_name == "ResNeXt50":
+      return ResNeXt50(n_class,rate,New,model_path)
+    elif model_name == "ShuffleNet":
+      return ShuffleNet(n_class,rate,New,model_path)
+    elif model_name == "SqueezeNet":
+      return SqueezeNet(n_class,rate,New,model_path)
+    elif model_name == "SwinTransformer":
+      return SwinTransformer(n_class,rate,New,model_path)
+    elif model_name == "WideResnet50":
+      return SwinTransformer(n_class,rate,New,model_path)
+    if model_name == "DenseNet121":
+      return Densenet121(n_class,rate,New,model_path)
+    if model_name == "DenseNet161":
+      return Densenet161(n_class,rate,New,model_path)
+    if model_name == "DenseNet201":
+      return Densenet201(n_class,rate,New,model_path)
+    else:
+      print("没有这个模型：",model_name)
+      print(1/0)
