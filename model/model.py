@@ -73,7 +73,7 @@ class ViT(nn.Module):
         
     def forward(self, X):
         X = self.base_model(X)
-        return X    
+        return X 
             
         
 class Resnet34(nn.Module):
@@ -211,27 +211,6 @@ class ShuffleNet(nn.Module):
         X = self.base_model(X)
         return X
         
-        
-class SqueezeNet(nn.Module):
-    def __init__(self, n_class, rate, New, model_path):
-        super(SqueezeNet, self).__init__()
-        self.n_class = n_class
-        if New:
-            self.base_model = models.squeezenet1_0(weights=SqueezeNet1_0_Weights.DEFAULT)
-            self.base_model.classifier[1] = nn.Linear(512, n_class)
-        else:
-            self.base_model = torch.load(model_path).module.base_model
-            self.base_model.classifier[1] = FC_(rate=rate, inp=512, outp=n_class)
-
-    def forward(self, X):
-        print("输入形状:", X.shape)
-        X = self.base_model(X)
-        print("经过 base_model 后的形状:", X.shape)
-        return X
-
-
-        
-        
 class SwinTransformer(nn.Module):
     def __init__(self, n_class,rate,New,model_path):
         super(SwinTransformer, self).__init__()
@@ -326,7 +305,7 @@ def get_model(model_name, rate, dataset_name):
     if dataset_name == "CUB":
       n_class = 200
     else:
-      print("没有这个数据集:",dataset_name)
+      print("No such dataset exists:",dataset_name)
       print(1/0)
     
     if rate == 0:
